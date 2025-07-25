@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 const drawerWidth = 220;
-const API_URL = 'http://localhost:5000/api/products'; // Замените на свой backend при деплое
+const API_URL = import.meta.env.VITE_API_URL + '/api/products'; // Замените на свой backend при деплое
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -197,7 +197,7 @@ function Dashboard({ onLogout }) {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/settings')
+    fetch(import.meta.env.VITE_API_URL + '/api/settings')
       .then(res => res.json())
       .then(data => setSiteEnabled(data.siteEnabled !== false))
       .finally(() => setLoading(false));
@@ -205,7 +205,7 @@ function Dashboard({ onLogout }) {
 
   const handleToggle = () => {
     setSaving(true);
-    fetch('http://localhost:5000/api/settings', {
+    fetch(import.meta.env.VITE_API_URL + '/api/settings', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ siteEnabled: !siteEnabled })
